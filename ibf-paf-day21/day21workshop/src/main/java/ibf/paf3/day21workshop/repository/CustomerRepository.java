@@ -1,6 +1,10 @@
 package ibf.paf3.day21workshop.repository;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Collections;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -10,7 +14,6 @@ import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
 
 import ibf.paf3.day21workshop.model.Customer;
-// import ibf.paf3.day21workshop.repository.Queries;
 import ibf.paf3.day21workshop.model.Orders;
 
 @Repository
@@ -69,8 +72,19 @@ public class CustomerRepository implements Queries {
             o.setFirstName(rs.getString("c_fn"));
             o.setLastName(rs.getString("c_ln"));
             o.setTaxRate(rs.getDouble("o_trate"));
-            o.setOrderDate(rs.getString("o_odate"));
-            
+            // Method 1 - and orderDate has to be of LocalDateTime
+            // o.setOrderDate(rs.getTimestamp("o_odate").toLocalDateTime());
+            // Method 2 - and orderDate has to be of Date
+            String dateString = rs.getString("o_odate");
+            if (dateString != null) {
+                try {
+                    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+                    Date orderDate = dateFormat.parse(dateString);
+                    o.setOrderDate(orderDate);
+                } catch (ParseException e) {
+                    System.err.println("Error parsing order date: " + e.getMessage());
+                }
+            }
             result.add(o);
         }
         return Collections.unmodifiableList(result);
