@@ -1,19 +1,19 @@
 package ibf.paf3.day21workshop.model;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class Orders extends Customer {
     private double taxRate;
-    private Date orderDate;
+    private LocalDateTime orderDate;
 
     public Orders() {}
 
-    public Orders(double taxRate, Date orderDate) {
+    public Orders(double taxRate, LocalDateTime orderDate) {
         this.taxRate = taxRate;
         this.orderDate = orderDate;
     }
 
-    public Orders(Integer id, String firstName, String lastName, double taxRate, Date orderDate) {
+    public Orders(Integer id, String firstName, String lastName, double taxRate, LocalDateTime orderDate) {
         super(id, firstName, lastName);
         this.taxRate = taxRate;
         this.orderDate = orderDate;
@@ -27,11 +27,11 @@ public class Orders extends Customer {
         this.taxRate = taxRate;
     }
 
-    public Date getOrderDate() {
+    public LocalDateTime getOrderDate() {
         return orderDate;
     }
 
-    public void setOrderDate(Date orderDate) {
+    public void setOrderDate(LocalDateTime orderDate) {
         this.orderDate = orderDate;
     }
 }
