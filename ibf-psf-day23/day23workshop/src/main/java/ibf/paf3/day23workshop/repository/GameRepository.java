@@ -25,7 +25,8 @@ public class GameRepository implements Queries {
             Game r = new Game();
             r.setGameName(rs.getString("boardgame_name"));
             r.setGameReviewCount(rs.getInt("number_of_reviews"));
-            r.setGameAvgRating(rs.getDouble("average_rating"));
+            String formattedNumber = String.format("%.2f", rs.getDouble("average_rating"));
+            r.setGameAvgRating(Double.parseDouble(formattedNumber));
             result.add(r);
         }
         return result;
