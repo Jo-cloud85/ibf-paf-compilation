@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title><link rel="stylesheet" 
+    href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" 
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" 
+    crossorigin="anonymous">
+</head>
+<body>
+    <div class="container pt-5">
+        <h1>Book Details</h1>
+        <a href="/"><h3>Back</h3></a>
+        <h2>Book Id: <code data-th-text="${book.id}"></code></h2>
+        <table class="table table-striped table-hover mt-3">
+            <tr>
+				<td>Title:</td>
+				<td><span data-th-text="${book.title}"></span></td>
+			</tr>
+			<tr>
+				<td>Authors:</td>
+				<td><span data-th-text="${book.authors}"></span></td>
+			</tr>
+			<tr>
+				<td>Average Rating:</td>
+				<td><span data-th-text="${book.averageRating}"></span></td>
+			</tr>
+			<tr>
+				<td>Language:</td>
+				<td><span data-th-text="${book.languageCode}"></span></td>
+			</tr>
+            <tr>
+				<td>Number of pages:</td>
+				<td><span data-th-text="${book.numPages}"></span></td>
+			</tr>
+            <tr>
+				<td>Ratings Count:</td>
+				<td><span data-th-text="${book.ratingsCount}"></span></td>
+			</tr>
+			<tr>
+				<td>Text Reviews Count:</td>
+				<td><span data-th-text="${book.textReviewsCount}"></span></td>
+			</tr>
+            <tr>
+				<td>Publication Date:</td>
+				<td><span data-th-text="${book.publicationDate}"></span></td>
+			</tr>
+            <tr>
+				<td>Publisher:</td>
+				<td><span data-th-text="${book.publisher}"></span></td>
+			</tr>
+        </table>
+    </div>
+</body>
+</html>
