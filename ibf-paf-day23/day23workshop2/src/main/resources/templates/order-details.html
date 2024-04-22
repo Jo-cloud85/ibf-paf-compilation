@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Details</title>
+    <link rel="stylesheet" 
+        href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" 
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" 
+        crossorigin="anonymous">
+</head>
+<body>
+    <div class="container pt-5">
+        <h1>Order Details</h1>
+        <a href="/"><h3>Back</h3></a>
+        <table class="table table-striped table-hover mt-3">
+            <tr>
+				<td>Order Id:</td>
+				<td><span data-th-text="${order.orderId}"></span></td>
+			</tr>
+			<tr>
+				<td>Order Date:</td>
+				<td><span data-th-text="${order.orderDate}"></span></td>
+			</tr>
+			<tr>
+				<td>Customer Id:</td>
+				<td><span data-th-text="${order.customerId}"></span></td>
+			</tr>
+			<tr>
+				<td>Total Price Of Order:</td>
+				<td><span data-th-text="${order.totalPriceOfOrder}"></span></td>
+			</tr>
+            <tr>
+				<td>Cost Price:</td>
+				<td><span data-th-text="${order.totalCostPrice}"></span></td>
+			</tr>
+        </table>
+    </div>
+</body>
+</html>
