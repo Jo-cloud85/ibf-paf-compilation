@@ -2,9 +2,6 @@ package ibf.paf3.day24.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.transaction.TransactionDefinition;
-import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
 
 import ibf.paf3.day24.exception.AccountsException;
@@ -19,19 +16,19 @@ public class AccountsService {
     @Autowired
     private AccountsRepository accountsRepo;
 
-    @Autowired
-    private PlatformTransactionManager txMgr;
+    // @Autowired
+    // private PlatformTransactionManager txMgr;
 
-    public void fundsTransfer2(String fromAcct, String toAcct, float amount) {
-        TransactionStatus txStatus = txMgr.getTransaction(TransactionDefinition.withDefaults());
-        try {
-            accountsRepo.updateBalanceById(fromAcct, -amount);
-            accountsRepo.updateBalanceById(toAcct, amount);
-            txMgr.commit(txStatus);
-        } catch (Exception ex) {
-            txMgr.rollback(txStatus);
-        }
-    }
+    // public void fundsTransfer2(String fromAcct, String toAcct, float amount) {
+    //     TransactionStatus txStatus = txMgr.getTransaction(TransactionDefinition.withDefaults());
+    //     try {
+    //         accountsRepo.updateBalanceById(fromAcct, -amount);
+    //         accountsRepo.updateBalanceById(toAcct, amount);
+    //         txMgr.commit(txStatus);
+    //     } catch (Exception ex) {
+    //         txMgr.rollback(txStatus);
+    //     }
+    // }
 
     /* If there isn't any AccountException, the 'default' exception that will be thrown is RuntimeException 
     // which is unchecked exception. Transactions will rollback when an unchecked exception is thrown.
@@ -43,18 +40,14 @@ public class AccountsService {
     public void fundsTransfer(String fromAcct, String toAcct, float amount) throws AccountsException {
 
         // start transaction
-        // if (!(accountsRepo.updateBalanceById(fromAcct, -amount) &&
-        // accountsRepo.updateBalanceById(toAcct, +amount))) {
-        //     throw new AccountsException("Cannot perform transfer");
-        // }
 
         if (!accountsRepo.updateBalanceById(fromAcct, -amount)) {
             throw new AccountsException("Cannot perform transfer");
         }
 
-        // if (accountsRepo.updateBalanceById(toAcct, +amount)){
+        if (!accountsRepo.updateBalanceById(toAcct, +amount)){
             throw new AccountsException("Cannot perform transfer");
-        // }
+        }
 
         //commit
         

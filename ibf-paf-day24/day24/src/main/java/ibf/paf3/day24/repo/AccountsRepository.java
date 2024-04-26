@@ -17,7 +17,7 @@ public class AccountsRepository {
             """;
 
     public boolean updateBalanceById(String accId, float amount) {
-        return template.update(SQL_UPDATE_ACCOUNT_BY_ID, accId, amount) >= 1;
+        return template.update(SQL_UPDATE_ACCOUNT_BY_ID, amount, accId ) >= 1;
     }
     
 }
