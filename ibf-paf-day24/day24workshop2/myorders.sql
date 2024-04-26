@@ -25,5 +25,5 @@ CREATE TABLE order_details (
     CONSTRAINT fk_order_id FOREIGN KEY (order_id) REFERENCES orders(order_id)
 );
 
-grant all privileges on myorders.* to 'abcde'@'%';
-flush privileges;
+-- grant all privileges on myorders.* to 'abcde'@'%';
+-- flush privileges;
