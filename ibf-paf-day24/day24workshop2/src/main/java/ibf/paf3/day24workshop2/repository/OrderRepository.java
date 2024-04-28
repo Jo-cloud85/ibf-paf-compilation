@@ -7,8 +7,6 @@ import org.springframework.stereotype.Repository;
 import ibf.paf3.day24workshop2.model.Order;
 import ibf.paf3.day24workshop2.model.OrderDetails;
 
-
-
 @Repository
 public class OrderRepository implements Queries {
  
