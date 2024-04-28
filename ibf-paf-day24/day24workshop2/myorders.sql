@@ -25,5 +25,6 @@ CREATE TABLE order_details (
     CONSTRAINT fk_order_id FOREIGN KEY (order_id) REFERENCES orders(order_id)
 );
 
--- grant all privileges on myorders.* to 'abcde'@'%';
--- flush privileges;
+-- When adding this database to Railway, comment this off as we are using Railway root user
+grant all privileges on myorders.* to 'abcde'@'%';
+flush privileges;

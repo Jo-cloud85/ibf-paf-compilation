@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orders Form</title>
+    <link rel="stylesheet" 
+        href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" 
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" 
+        crossorigin="anonymous">
+</head>
+<body>
+    <div class="container pt-5">
+        <h2>Create Order</h2>
+        <form method="post" action="/order" data-th-object="${order}" >
+            <div class="form-group">
+                <!-- When you use type="date", the value entered by the user will be sent as a string in the 
+                format 'yyyy-MM-dd' but anyway in this case, we let the orderDate be automatically generated 
+                using new Date() -->
+                <!-- <label for="orderDate">Order Date:</label>
+                <input type="date" class="form-control" data-th-field="orderDate" name="orderDate" required>
+                <br><br> -->
+        
+                <label for="customerName">Customer Name:</label>
+                <input 
+                    type="text" 
+                    class="form-control" 
+                    data-th-field="*{customerName}" 
+                    name="customerName" 
+                    required
+                >
+                <br><br>
+        
+                <label for="shipAddress">Shipping Address:</label>
+                <input 
+                    type="text" 
+                    class="form-control" 
+                    data-th-field="*{shipAddress}" 
+                    ame="shipAddress" 
+                    required
+                >
+                <br><br>
+        
+                <label for="notes">Notes:</label>
+                <textarea 
+                    class="form-control" 
+                    data-th-field="*{notes}" 
+                    name="notes">
+                </textarea>
+                <br><br>
+        
+                <label for="tax">Tax (%):</label>
+                <input 
+                    class="form-control" 
+                    type="number" 
+                    data-th-field="*{tax}" 
+                    name="tax" 
+                    min="0" 
+                    step="0.01" 
+                    value="0">
+                <br><br>
+            </div>
+
+            <hr>
+    
+            <h3>Order Details</h3>
+            <!-- Dynamically creating order details using Javascript -->
+            <div id="orderDetailsContainer">
+                <div class="orderDetail">
+                    <label for="product">Product:</label>
+                    <input class="form-control" type="text" name="product"><br>
+                    
+                    <label for="unitPrice">Unit Price:</label>
+                    <input class="form-control" type="number" name="unitPrice" min="0" step="0.01"><br>
+                    
+                    <label for="discount">Discount (%):</label>
+                    <input class="form-control" type="number" name="discount" min="0" step="0.01"><br>
+                    
+                    <label for="quantity">Quantity:</label>
+                    <input class="form-control" type="number" name="quantity" min="1"><br>
+                </div>
+            </div>
+            
+            <div>
+                <button 
+                    class="btn btn-primary rounded-pill mt-4 px-4 py-2" 
+                    type="button" 
+                    onclick="addOrderDetail()"
+                >
+                    Add Order Detail
+                </button>
+            </div>
+            <div>
+                <button 
+                    class="btn btn-dark rounded-pill mt-4 px-4 py-2" 
+                    type="submit"
+                >
+                    Submit Order
+                </button>
+            </div>
+        </form>
+    </div>
+</body>
+<script>
+    function addOrderDetail() {
+        let container = document.getElementById('orderDetailsContainer');
+        let newOrderDetail = document.createElement('div');
+        newOrderDetail.classList.add('orderDetail');
+        newOrderDetail.innerHTML = `
+            <label for="product">Product:</label>
+            <input class="form-control" type="text" name="product"><br>
+            
+            <label for="unitPrice">Unit Price:</label>
+            <input class="form-control" type="number" name="unitPrice" min="0" step="0.01"><br>
+            
+            <label for="discount">Discount:</label>
+            <input class="form-control" type="number" name="discount" value="0"><br>
+            
+            <label for="quantity">Quantity:</label>
+            <input class="form-control" type="number" name="quantity" min="1"><br>`;
+        container.appendChild(newOrderDetail);
+    }
+</script>
+</html>

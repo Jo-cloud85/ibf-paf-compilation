@@ -6,17 +6,20 @@ public class OrderDetails {
     private String product;
     private float unitPrice;
     private float discount;
-    private int quantity;
+    private Integer quantity;
+    private Integer orderId;
 
     public OrderDetails() {
     }
 
-    public OrderDetails(Integer id, String product, float unitPrice, float discount, int quantity) {
+    public OrderDetails(Integer id, String product, float unitPrice, float discount, Integer quantity,
+            Integer orderId) {
         this.id = id;
         this.product = product;
         this.unitPrice = unitPrice;
         this.discount = discount;
         this.quantity = quantity;
+        this.orderId = orderId;
     }
 
     public Integer getId() {
@@ -51,19 +54,25 @@ public class OrderDetails {
         this.discount = discount;
     }
 
-    public int getQuantity() {
+    public Integer getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(Integer quantity) {
         this.quantity = quantity;
+    }
+
+    public Integer getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(Integer orderId) {
+        this.orderId = orderId;
     }
 
     @Override
     public String toString() {
-        return "OrderDetails [id=" + id + ", product=" + product + ", unitPrice=" + unitPrice
-                + ", discount=" + discount + ", quantity=" + quantity + "]";
+        return "OrderDetails [id=" + id + ", product=" + product + ", unitPrice=" + unitPrice + ", discount=" + discount
+                + ", quantity=" + quantity + ", orderId=" + orderId + "]";
     }
-
-    
 }

@@ -1,13 +1,12 @@
 package ibf.paf3.day24workshop2.model;
 
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
-/* Somehow using Date does not work */
 public class Order {
     private Integer orderId;
-    private LocalDate orderDate;
+    private Date orderDate;
     private String customerName;
     private String shipAddress;
     private String notes;
@@ -15,9 +14,10 @@ public class Order {
     private List<OrderDetails> orderDetails = new LinkedList<>();
 
     public Order() {
+        this.orderDate = new Date();
     }
 
-    public Order(Integer orderId, LocalDate orderDate, String customerName, String shipAddress, String notes, float tax,
+    public Order(Integer orderId, Date orderDate, String customerName, String shipAddress, String notes, float tax,
             List<OrderDetails> orderDetails) {
         this.orderId = orderId;
         this.orderDate = orderDate;
@@ -36,11 +36,11 @@ public class Order {
         this.orderId = orderId;
     }
 
-    public LocalDate getOrderDate() {
+    public Date getOrderDate() {
         return orderDate;
     }
 
-    public void setOrderDate(LocalDate orderDate) {
+    public void setOrderDate(Date orderDate) {
         this.orderDate = orderDate;
     }
 
