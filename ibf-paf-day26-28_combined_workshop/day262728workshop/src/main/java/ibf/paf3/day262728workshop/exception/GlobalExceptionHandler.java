@@ -32,4 +32,19 @@ public class GlobalExceptionHandler {
 
         return new ResponseEntity<ErrorMessage>(errMsg, HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler({IdNotFoundException.class})
+    public ResponseEntity<ErrorMessage> handleInvalidException2(Exception ex, HttpServletRequest request) {
+
+        // new ErrorMessage (statusCode, timeStamp, message, description)
+        ErrorMessage errMsg = new ErrorMessage(
+                HttpStatus.NOT_FOUND.value(),
+                new Date(),
+                ex.getMessage(), 
+                request.getRequestURL().toString());
+
+        log.error(ex.getMessage());
+
+        return new ResponseEntity<ErrorMessage>(errMsg, HttpStatus.NOT_FOUND);
+    }
 }
