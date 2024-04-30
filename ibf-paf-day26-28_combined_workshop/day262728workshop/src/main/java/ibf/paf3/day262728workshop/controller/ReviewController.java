@@ -2,6 +2,7 @@ package ibf.paf3.day262728workshop.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,7 +29,6 @@ public class ReviewController {
     // ======================================================================================================
     // Day 26
     // ====================================================================================================== 
-
     // You are trying to get the parameters from the URL directly so you cannot use @RequestBody since this is 
     // not a PostMapping i.e. no payload and you also cannot use MultiValueMap (there is no HTML form)
 
@@ -40,10 +40,14 @@ public class ReviewController {
         @RequestParam(defaultValue = "25") int limit,
         @RequestParam(defaultValue = "0") int offset) throws NoMatchFoundException{
 
-        return new ResponseEntity<String>(
-            reviewSvc.findGamesByNameWithPaginationInJson(substrName, limit, offset).toString(), 
-            HttpStatus.OK
-        );
+        if (reviewSvc.findGamesByNameWithPaginationInJson(substrName, limit, offset) == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body("{'error_message': 'No games found'}");
+        }
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(reviewSvc.findGamesByNameWithPaginationInJson(substrName, limit, offset).toString());
     }
 
     // Day 26 (b) - Search boardgames by rank
@@ -69,7 +73,7 @@ public class ReviewController {
         return new ResponseEntity<String>(
                 reviewSvc.findGameByIdInJson(idStr).toString(), 
                 HttpStatus.OK
-            );
+        );
     }
 
     // ======================================================================================================
@@ -82,7 +86,9 @@ public class ReviewController {
     public ResponseEntity<String> createReview(@ModelAttribute Review review) {
         // System.out.println(review);
         if (!reviewSvc.doesGameIdExist(review.getID())) {
-            return new ResponseEntity<String>("Game ID does not exist", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<String>(
+                "Game ID does not exist", 
+                HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<String>(
             reviewSvc.createReview(review).toString(), 
@@ -101,11 +107,15 @@ public class ReviewController {
         String comment = reviewPayload.getC_text();
 
         if (!reviewSvc.doesReviewObjIdExist(reviewId)) {
-            return new ResponseEntity<String>("Review ID does not exist", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<String>(
+                "Review ID does not exist", 
+                HttpStatus.NOT_FOUND);
         }
 
         if (reviewSvc.updateReview(reviewId, rating, comment) != 0) {
-            return new ResponseEntity<String>("Updated review!", HttpStatus.OK);
+            return new ResponseEntity<String>(
+                "Updated review!", 
+                HttpStatus.OK);
         };
 
         return new ResponseEntity<String>("Update failed!", HttpStatus.BAD_REQUEST);
@@ -118,10 +128,14 @@ public class ReviewController {
         @PathVariable("review_id") String reviewId) {
 
         if (!reviewSvc.doesReviewObjIdExist(reviewId)) {
-            return new ResponseEntity<String>("Review ID does not exist", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<String>(
+                "Review ID does not exist", 
+                HttpStatus.NOT_FOUND);
         }
 
-        return new ResponseEntity<String>(reviewSvc.getLatestReviewInJson(reviewId).toString(), HttpStatus.OK);
+        return new ResponseEntity<String>(
+            reviewSvc.getLatestReviewInJson(reviewId).toString(), 
+            HttpStatus.OK);
     }
 
     // Day 27 (d)
@@ -131,10 +145,14 @@ public class ReviewController {
         @PathVariable("review_id") String reviewId) {
 
         if (!reviewSvc.doesReviewObjIdExist(reviewId)) {
-            return new ResponseEntity<String>("Review ID does not exist", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<String>(
+                "Review ID does not exist", 
+                HttpStatus.NOT_FOUND);
         }
 
-        return new ResponseEntity<String>(reviewSvc.getFullReviewInJson(reviewId).toString(), HttpStatus.OK);
+        return new ResponseEntity<String>(
+            reviewSvc.getFullReviewInJson(reviewId).toString(), 
+            HttpStatus.OK);
     }
 
     // ======================================================================================================
