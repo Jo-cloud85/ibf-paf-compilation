@@ -159,7 +159,7 @@ public class ReviewRepository {
     /*
         db.reviews.updateOne(
             { _id: ObjectId("662fc81cbd58d730ceb418bf") },
-            { $push: { edited: { rating: 7, c_text: "hello this is updated", posted: new Date() } } }
+            { $push: { edited: { rating: 7, c_text: "gonna recommend this to my friends", posted: new Date() } } }
         )
     */
     public long updateReview(ObjectId reviewObjId, Integer rating, String comment) {
