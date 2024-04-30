@@ -191,7 +191,7 @@ public class ReviewRepository {
                             "$c_text" // If "edited" array is empty or null, use the outer "c_text"
                         ]
                     },
-                    "edited": { $ne: ["$edited", []] }
+                    "edited": 1
                 }
             }
         ])
