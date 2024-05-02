@@ -24,7 +24,7 @@
         - MYSQLUSER
         - MYSQL_URL (get the url from MySQL database and change it to) (DONT ADD jdbc to the one in MySQL, only to the Service one)
             - jdbc:mysql://<your host>/<your database>
-            - e.g. jdbc:mysql://viaduct.proxy.rlwy.net:30207/myorders
+            - e.g. jdbc:mysql://viaduct.proxy.rlwy.net:30207/rsvpV2
     - Go back to VS code (make sure you are in the root folder of your application)
         - railway login > railway link > railway up
         - Make sure you generate a new domain
@@ -65,7 +65,7 @@
 1. In your application.properties
     
     ```bash
-    spring.data.mongodb.uri=${MONGO_URL}/library?authSource=admin OR
+    spring.data.mongodb.uri=${MONGO_URL}/test?authSource=admin OR
     
     pring.data.mongodb.uri=${MONGO_URL}/<database name>?retryWrites=true&w=majority&&authSource=admin
     ```
