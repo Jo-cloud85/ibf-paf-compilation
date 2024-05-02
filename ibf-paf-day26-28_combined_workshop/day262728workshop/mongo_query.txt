@@ -1,0 +1,99 @@
+db.getCollection("reviews").find({})
+
+db.reviews.insert({
+    user: "veldora",
+    rating: 7,
+    c_text: "",
+    ID: 27,
+    posted: new Date(),
+    name: "Supremacy"
+})
+
+db.games.find({
+    gid: 11
+})
+.count()
+
+db.reviews.updateOne(
+    { _id: ObjectId("662fd590bd58d730ceb418d3") },
+    { $push: { edited: { rating: 9, c_text: "love the animation and graphics", posted: new Date() } } }
+)
+
+db.reviews.aggregate([
+  {
+    $match: {
+      "_id": ObjectId("662fd46fbd58d730ceb418d1")
+    }
+  },
+  {
+    $project: {
+      "user": 1,
+      "ID": 1,
+      "name": 1,
+      "rating": 1,
+      "posted": 1,
+      "c_text": {
+        $ifNull: [
+          { $arrayElemAt: ["$edited.c_text", -1] }, // Get latest "c_text" fr "edited" array using $arrayElemAt
+          "$c_text" // If "edited" array is empty or null, use the outer "c_text"
+        ]
+      },
+      "edited": 1
+    }
+  }
+])
+
+
+db.games.aggregate([
+    {
+        $match: {
+          gid: 14
+        }
+    },
+    { 
+        $lookup: {
+            from: "reviews",
+            foreignField: "ID",
+            localField: "gid",
+            as: "reviews"
+        }
+    },
+    {
+        $project: {
+            "gid": 1,
+            "name": 1,
+            "year": 1,
+            "ranking": 1,
+            "users_rated": 1,
+            "url": 1,
+            "image": 1,
+            "reviews": 1
+        }
+    }
+])
+
+db.games.aggregate([
+    { 
+        $lookup: {
+            from: "comments",
+            foreignField: "gid",
+            localField: "gid",
+            pipeline: [
+                {$sort: {rating: -1}},
+                {$limit:1}
+            ],
+            as: "reviews"
+        }
+    },
+    {$unwind:"$reviews"},
+    {$project: {
+        _id: 0,
+        gid: 1, 
+        name: 1,
+        rating: "$reviews.rating",
+        user: "$reviews.user",
+        c_text: "$reviews.c_text",
+        c_id: "$reviews.c_id"
+    }},
+    {$limit:10}
+])

@@ -30,7 +30,11 @@ public class PersonRepo {
     //     hobbies: ["gaming", "coding"],
     // })
 
-    // insert method will throw an error if the id already exists
+    /* insert method will throw an error if the_id already exists BUT if your person object does not have
+    the _id field then using insert or save wouldn't matter even if the person's name already exists
+    MongoDB will just ignore the duplicate name and automatically generate a new _id i.e. new record
+    The way to go around this is the manually check if the name exist before you insert or save */
+    
     public Person insertPerson(Person person) {
         Person insertedPerson = mongoTemplate.insert(person);
         return insertedPerson;
