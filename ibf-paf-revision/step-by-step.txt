@@ -1,0 +1,88 @@
+- Docker Revision
+
+- Create your Dockerfile first (ignore if don't need Docker)
+    Building the image
+    - `docker build -t joyoung/day26:v1 .`  ← The ‘.’ is very important!
+    
+    Run the image
+    - `docker run -d -p 8080:3000 joyoung/day26:v1` ← The first 3000 MUST match your ENV port and server port
+
+######################################################
+
+- MySQL Commands - Uploading to Railway
+    - Make sure your queries work first in the default sql_mode i.e. only_full_group_by
+    - On Railway, create a new project > create a new MySQL database
+    - Copy down the following from the MySQL database:
+        - MYSQLPASSWORD
+        - MYSQLUSER
+        - MYSQL_URL
+            - Will change the later in the new service we create
+    - And change the MYSQLDATABASE from the default railway to your database name e.g. northwind, bgg
+    - Create an empty service and add the following environment variables. For the url, make sure you change ‘railway’ to your desired database and add ‘jdbc’ in front.
+        - NIXPACKS_JDK_VERSION
+        - MYSQLPASSWORD
+        - MYSQLUSER
+        - MYSQL_URL (get the url from MySQL database and change it to) (DONT ADD jdbc to the one in MySQL, only to the Service one)
+            - jdbc:mysql://<your host>/<your database>
+            - e.g. jdbc:mysql://viaduct.proxy.rlwy.net:30207/myorders
+    - Go back to VS code (make sure you are in the root folder of your application)
+        - railway login > railway link > railway up
+        - Make sure you generate a new domain
+        - When your app is deployed and you may realise this error
+            
+            ```bash
+            java.sql.SQLSyntaxErrorException: Unknown database 'rsvpV2'
+            ```
+            
+        - OR in your MySql database > Data > you see no tables loaded.
+        - This means that you have not add the database you want.
+        - In your CLI terminal, go to the folder where your desired database is.
+        - Sign in as the railway user i.e.
+            
+            ```bash
+            -- Login first
+            
+            yingfeng@JoYFs-Laptop databases % mysql -h viaduct.proxy.rlwy.net -uroot -piPLEKJQDSMOjEltNYMdrBCDAbgtwSEt --port 30207
+            
+            mysql> create database rsvpV2;
+            
+            mysql> use rsvpV2;
+            
+            mysql> exit
+            
+            -- Login again, now with 'rsvpV2 < schema.sql' 
+            
+            yingfeng@JoYFs-Laptop databases % mysql -h viaduct.proxy.rlwy.net -uroot -piPLEKJQDSMOjEltNYMdrBCDAbgtwSEtA --port 30207 rsvpV2 < schema.sql
+            
+            -- Now the sql file is being injected into the application
+            ```
+            
+        - Now the app hosted on Railway should work
+
+######################################################
+
+- MongoDB Commands - Uploading to Railway
+1. In your application.properties
+    
+    ```bash
+    spring.data.mongodb.uri=${MONGO_URL}/library?authSource=admin OR
+    
+    pring.data.mongodb.uri=${MONGO_URL}/<database name>?retryWrites=true&w=majority&&authSource=admin
+    ```
+    
+2. In Railway
+    - Create a MongoDB and an empty service first
+    - Then, run railway link, railway up
+    - In the Service/ main app, add 1 variable - MONGO_URL and add the database name and authSource (VERY IMPORTANT OR YOU ADD in your application.properties)
+        
+        i.e. mongodb://mongo:ElHMuKHLhUPCkRQHTmkpMbtCSZLPDaHn@viaduct.proxy.rlwy.net:17218/test?authSource=admin
+        
+    - On the terminal, navigate to the folder where your file that you want to ‘mongoimport’ e.g. data.csv, inventory.json, then type this:
+        
+        ```bash
+        // If it is csv file
+        mongoimport mongodb://mongo:HiBqBDRyAAWJamGyYXymOkDjfckLMYDQ@viaduct.proxy.rlwy.net:20727 --authenticationDatabase=admin --db library --collection books --type csv --file books.csv --headerline 
+        
+        // If it is json file, with jsonArray (refer to above for more details)
+        mongoimport mongodb://mongo:rfepgiUTUBoUCWaHwRBACYIhAKwQbWQe@roundhouse.proxy.rlwy.net:31118 --authenticationDatabase=admin --db test --collection movies --type json --jsonArray movies.json
+        ```
