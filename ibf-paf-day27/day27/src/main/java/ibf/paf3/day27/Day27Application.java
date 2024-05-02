@@ -89,28 +89,6 @@ public class Day27Application implements CommandLineRunner {
 		// ObjectId objKey = new Object("xxxxxxxxx");
 
 		// See PersonService.java for refactorization -------
-		// ------------------------------------------------------------------------------------
-		// Day 27 - Slide 3
-		/*
-			db.persons.update(
-				{ _id: ObjectId("662e503ac76d866aae994b8e")},
-				{ $set: {name: "Felicia Wong", age: 21, gender: "F", hobbies: ["Coding", "Hiking"]}},
-				{ upsert: true}
-			)
-		*/
-		// ObjectId id = new ObjectId("662e503ac76d866aae994b8e");
-        // Query query = new Query(Criteria.where("_id").is(id));
-
-        // Update update = new Update();
-        // update.set("name", "Felicia Wong JY");
-        // update.set("age", 21);
-        // update.set("gender", "F");
-        // update.set("hobbies", Arrays.asList("Coding", "Hiking"));
-
-        // FindAndModifyOptions options = new FindAndModifyOptions().upsert(true);
-
-        // Person person = mongoTemplate.findAndModify(query, update, options, Person.class);
-		// System.out.printf("Slide 3: %s\n", person);
 
 		// ------------------------------------------------------------------------------------
 		// Day 27 - Slide 12
@@ -149,9 +127,9 @@ public class Day27Application implements CommandLineRunner {
 				{ _id: 1, name: 1, age: 1, gender: 1}
 			);
 		 */
-		Query querySlide16 = new Query();
-		querySlide16.addCriteria(Criteria.where("age").gte(30));
-		querySlide16.fields()
+		Query query = new Query();
+		query.addCriteria(Criteria.where("age").gte(30));
+		query.fields()
 		     .include("_id", "name", "age", "gender");
 
 		List<Person> resultsSlide16 = mongoTemplate.find(querySlide16, Person.class);
@@ -732,11 +710,11 @@ public class Day27Application implements CommandLineRunner {
 			}])
 		*/
 		ProjectionOperation projectOperationSlide48 = Aggregation.project()
-                .and("_id").as("_id")
-                .andExpression("concat(Title, ' - ', Rated)").as("title")
-                .and("Released").as("Released")
-                .andExpression("{ $convert: { input: '$Year', to: 'int' } }").as("year")
-                .andExpression("{ $convert: { input: '$Response', to: 'bool' } }").as("response");
+	                .and("_id").as("_id")
+	                .andExpression("concat(Title, ' - ', Rated)").as("title")
+	                .and("Released").as("Released")
+	                .andExpression("{ $convert: { input: '$Year', to: 'int' } }").as("year")
+	                .andExpression("{ $convert: { input: '$Response', to: 'bool' } }").as("response");
 
 	        SortOperation sortOperationSlide48 = Aggregation.sort(Sort.by(Direction.ASC, "title"));
 	
@@ -789,18 +767,18 @@ public class Day27Application implements CommandLineRunner {
 			])
 		 */
 		ProjectionOperation projectOperationSlide49 = Aggregation.project()
-				.and("_id").as("_id")
-				.andExpression("concat(Title, ' - ', Rated)").as("title")
-				.and("Released").as("Released")
-				.and(AggregationExpression.from(MongoExpression.create("""
-					$dateFromString: {
-						dateString: "$Released",
-						format: "%d %b %Y",
-						onError: ""
-					}
-				"""))).as("Screened")
-				.andExpression("{ $convert: { input: '$Year', to: 'int' } }").as("year")
-                .andExpression("{ $convert: { input: '$Response', to: 'bool' } }").as("response");
+			.and("_id").as("_id")
+			.andExpression("concat(Title, ' - ', Rated)").as("title")
+			.and("Released").as("Released")
+			.and(AggregationExpression.from(MongoExpression.create("""
+				$dateFromString: {
+					dateString: "$Released",
+					format: "%d %b %Y",
+					onError: ""
+				}
+			"""))).as("Screened")
+			.andExpression("{ $convert: { input: '$Year', to: 'int' } }").as("year")
+			.andExpression("{ $convert: { input: '$Response', to: 'bool' } }").as("response");
 
 		SortOperation sortOperationSlide49 = Aggregation.sort(Sort.by("title").ascending());
 
