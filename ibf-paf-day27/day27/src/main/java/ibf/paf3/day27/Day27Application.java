@@ -108,7 +108,7 @@ public class Day27Application implements CommandLineRunner {
 
         	// Update updateOps = new Update()
 		// 		.set("name", updatedPerson.getName())
-	        //     	.set("age", updatedPerson.getAge())
+	        //     		.set("age", updatedPerson.getAge())
 		// 		.push("hobbies")
 		// 		.each(updatedPerson.getHobbies());
 		
@@ -232,7 +232,7 @@ public class Day27Application implements CommandLineRunner {
 		// Method 2 ----
 		Criteria criteria = new Criteria()
 			.andOperator(Criteria.where("instock.warehouse").is("Ang Mo Kio"),
-						 Criteria.where("instock.qty").gt(50));
+				     Criteria.where("instock.qty").gt(50));
 	
 		Query querySlide28_I = new Query(criteria);
 		List<Document> resultSlide27_I = mongoTemplate.find(querySlide28_I, Document.class, "inventory");
@@ -323,7 +323,7 @@ public class Day27Application implements CommandLineRunner {
 		// Basically if there is qty of value less than 1, set it to 0
 		// Criteria criteriaSlide31 = Criteria
 		// 		.where("instock.warehouse").is("Ang Mo Kio")
-	        //      .and("instock.qty").lte(-1);
+	        //      	.and("instock.qty").lte(-1);
 	        // Query querySlide31 = new Query(criteriaSlide31);
 	        // Update updateSlide31 = new Update().set("instock.$.qty", 0);
 	        // UpdateResult resultSlide31 = mongoTemplate.updateMulti(
@@ -498,7 +498,7 @@ public class Day27Application implements CommandLineRunner {
 						.and("Plot").as("summary")
 						.and("Awards").as("winning")
 						.and(AggregationExpression.from(MongoExpression.create("""
-								$concat: ["$Title", " (", "$Rated", ")"]"""))).as("Title");
+							$concat: ["$Title", " (", "$Rated", ")"]"""))).as("Title");
 
 		SortOperation sortOperationSlide23 = Aggregation.sort(
 			Sort.by(Direction.ASC, "Title"));
