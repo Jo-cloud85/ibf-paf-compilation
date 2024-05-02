@@ -708,11 +708,11 @@ public class Day27Application implements CommandLineRunner {
 			}])
 		*/
 		ProjectionOperation projectOperationSlide48 = Aggregation.project()
-                .and("_id").as("_id")
-                .andExpression("concat(Title, ' - ', Rated)").as("title")
-                .and("Released").as("Released")
-                .andExpression("{ $convert: { input: '$Year', to: 'int' } }").as("year")
-                .andExpression("{ $convert: { input: '$Response', to: 'bool' } }").as("response");
+	                .and("_id").as("_id")
+	                .andExpression("concat(Title, ' - ', Rated)").as("title")
+	                .and("Released").as("Released")
+	                .andExpression("{ $convert: { input: '$Year', to: 'int' } }").as("year")
+	                .andExpression("{ $convert: { input: '$Response', to: 'bool' } }").as("response");
 
 	        SortOperation sortOperationSlide48 = Aggregation.sort(Sort.by(Direction.ASC, "title"));
 	
@@ -765,18 +765,18 @@ public class Day27Application implements CommandLineRunner {
 			])
 		 */
 		ProjectionOperation projectOperationSlide49 = Aggregation.project()
-				.and("_id").as("_id")
-				.andExpression("concat(Title, ' - ', Rated)").as("title")
-				.and("Released").as("Released")
-				.and(AggregationExpression.from(MongoExpression.create("""
-					$dateFromString: {
-						dateString: "$Released",
-						format: "%d %b %Y",
-						onError: ""
-					}
-				"""))).as("Screened")
-				.andExpression("{ $convert: { input: '$Year', to: 'int' } }").as("year")
-                .andExpression("{ $convert: { input: '$Response', to: 'bool' } }").as("response");
+			.and("_id").as("_id")
+			.andExpression("concat(Title, ' - ', Rated)").as("title")
+			.and("Released").as("Released")
+			.and(AggregationExpression.from(MongoExpression.create("""
+				$dateFromString: {
+					dateString: "$Released",
+					format: "%d %b %Y",
+					onError: ""
+				}
+			"""))).as("Screened")
+			.andExpression("{ $convert: { input: '$Year', to: 'int' } }").as("year")
+			.andExpression("{ $convert: { input: '$Response', to: 'bool' } }").as("response");
 
 		SortOperation sortOperationSlide49 = Aggregation.sort(Sort.by("title").ascending());
 
