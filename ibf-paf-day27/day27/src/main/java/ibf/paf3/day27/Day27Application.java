@@ -106,9 +106,9 @@ public class Day27Application implements CommandLineRunner {
 		// updatedPerson.setGender("F");
 		// updatedPerson.setHobbies(Arrays.asList("Knitting", "Skating"));
 
-        // Update updateOps = new Update()
+        	// Update updateOps = new Update()
 		// 		.set("name", updatedPerson.getName())
-        //     	.set("age", updatedPerson.getAge())
+	        //     	.set("age", updatedPerson.getAge())
 		// 		.push("hobbies")
 		// 		.each(updatedPerson.getHobbies());
 		
@@ -126,9 +126,9 @@ public class Day27Application implements CommandLineRunner {
 			);
 		 */
 		Query query = new Query();
-        query.addCriteria(Criteria.where("age").gte(30));
-        query.fields()
-			 .include("_id", "name", "age", "gender");
+		query.addCriteria(Criteria.where("age").gte(30));
+		query.fields()
+		     .include("_id", "name", "age", "gender");
 
 		List<Person> resultsSlide16 = mongoTemplate.find(query, Person.class);
 		// System.out.printf("Slide 16: %s\n", resultsSlide16.toString());
@@ -257,7 +257,7 @@ public class Day27Application implements CommandLineRunner {
 				Criteria.where("warehouse").is("Ang Mo Kio")
                         .and("qty").gte(20));
 
-        Query querySlide28_2 = new Query(criteriaSlide28_2);
+        	Query querySlide28_2 = new Query(criteriaSlide28_2);
 		List<Document> resultSlide28_2 = mongoTemplate.find(querySlide28_2, Document.class, "inventory");
 		// System.out.printf("Slide 28_2: %s\n", resultSlide28_2);
 
@@ -274,8 +274,8 @@ public class Day27Application implements CommandLineRunner {
 			);
 		 */
 		// Criteria criteriaSlide29 = Criteria.where("instock.warehouse").is("Serangoon");
-        // Update updateSlide29 = new Update().inc("instock.$[].qty", 100);
-        // UpdateResult resultSlide29 = mongoTemplate.updateMulti(
+	        // Update updateSlide29 = new Update().inc("instock.$[].qty", 100);
+	        // UpdateResult resultSlide29 = mongoTemplate.updateMulti(
 		// 	Query.query(criteriaSlide29), updateSlide29, Document.class, "inventory");
 		// System.out.printf("Slide 29: %s\n", resultSlide29);
 
@@ -288,8 +288,8 @@ public class Day27Application implements CommandLineRunner {
 			)
 		 */
 		// Query querySlide30 = Query.query(Criteria.where("_id").is("6627ae4457f6b42be327d122"));
-        // Update updateSlide30 = new Update().push("instock", new Instock("Ubi", 90));
-        // UpdateResult resultSlide30 = mongoTemplate.updateFirst(
+	        // Update updateSlide30 = new Update().push("instock", new Instock("Ubi", 90));
+	        // UpdateResult resultSlide30 = mongoTemplate.updateFirst(
 		// 		querySlide30, updateSlide30, Document.class, "inventory");
 		// System.out.printf("Slide 30: %s\n", resultSlide30);
 
@@ -302,8 +302,8 @@ public class Day27Application implements CommandLineRunner {
 			)
 		 */
 		// Query querySlide30_2 = Query.query(Criteria.where("_id").is("6627ae4457f6b42be327d122"));
-        // Update updateSlide30_2 = new Update().pop("instock", Update.Position.LAST);
-        // UpdateResult resultSlide30_2 = mongoTemplate.updateFirst(
+	        // Update updateSlide30_2 = new Update().pop("instock", Update.Position.LAST);
+	        // UpdateResult resultSlide30_2 = mongoTemplate.updateFirst(
 		// 		querySlide30_2, updateSlide30_2, Document.class, "inventory");
 		// System.out.printf("Slide 30: %s\n", resultSlide30_2);
 
@@ -323,10 +323,10 @@ public class Day27Application implements CommandLineRunner {
 		// Basically if there is qty of value less than 1, set it to 0
 		// Criteria criteriaSlide31 = Criteria
 		// 		.where("instock.warehouse").is("Ang Mo Kio")
-        //      .and("instock.qty").lte(-1);
-        // Query querySlide31 = new Query(criteriaSlide31);
-        // Update updateSlide31 = new Update().set("instock.$.qty", 0);
-        // UpdateResult resultSlide31 = mongoTemplate.updateMulti(
+	        //      .and("instock.qty").lte(-1);
+	        // Query querySlide31 = new Query(criteriaSlide31);
+	        // Update updateSlide31 = new Update().set("instock.$.qty", 0);
+	        // UpdateResult resultSlide31 = mongoTemplate.updateMulti(
 		// 		querySlide31, updateSlide31, Document.class, "inventory");
 		// System.out.printf("Slide 31: %s\n", resultSlide31);
 
@@ -394,8 +394,8 @@ public class Day27Application implements CommandLineRunner {
 			]);
 		 */
 		GroupOperation groupOperation = Aggregation.group("Rated")
-												.count().as("countD") // "countD is the alias"
-												.push("Title").as("titles"); // "titles is the alias"
+			.count().as("countD") // "countD is the alias"
+			.push("Title").as("titles"); // "titles is the alias"
 
 		// SortOperation sortOperationSlide15 = Aggregation.sort(Sort.by(Direction.ASC, "countD"));								
 
@@ -714,16 +714,16 @@ public class Day27Application implements CommandLineRunner {
                 .andExpression("{ $convert: { input: '$Year', to: 'int' } }").as("year")
                 .andExpression("{ $convert: { input: '$Response', to: 'bool' } }").as("response");
 
-        SortOperation sortOperationSlide48 = Aggregation.sort(Sort.by(Direction.ASC, "title"));
-
-        Aggregation pipelineSlide48 = Aggregation.newAggregation(
-			projectOperationSlide48, 
-			sortOperationSlide48);
-
-		AggregationResults<Document> aggregationResultSlide48 = mongoTemplate.aggregate(
-				pipelineSlide48, "movies", Document.class);
-
-        List<Document> documentResultSlide48 = aggregationResultSlide48.getMappedResults();
+	        SortOperation sortOperationSlide48 = Aggregation.sort(Sort.by(Direction.ASC, "title"));
+	
+	        Aggregation pipelineSlide48 = Aggregation.newAggregation(
+				projectOperationSlide48, 
+				sortOperationSlide48);
+	
+			AggregationResults<Document> aggregationResultSlide48 = mongoTemplate.aggregate(
+					pipelineSlide48, "movies", Document.class);
+	
+	        List<Document> documentResultSlide48 = aggregationResultSlide48.getMappedResults();
 		for (Document doc : documentResultSlide48) {
 			doc.append("date", LocalDateTime.now());
 		}
@@ -794,7 +794,7 @@ public class Day27Application implements CommandLineRunner {
 
 
 		// ======================================================================================
-		// Day 29 - Chuk's listings exercise (make sure listings collection is inside the 'test' database in local)
+		// Day 29 - Chuk's listings exercise (make sure listings collection is inside the 'test' database in local when you run)
 		// ======================================================================================
 
 		// ------------------------------------------------------------------------------------
