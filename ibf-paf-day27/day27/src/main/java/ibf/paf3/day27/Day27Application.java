@@ -11,6 +11,7 @@ import java.util.Locale;
 import org.attoparser.ParseException;
 import org.bson.Document;
 import org.bson.conversions.Bson;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -18,6 +19,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.mongodb.MongoExpression;
+import org.springframework.data.mongodb.core.FindAndModifyOptions;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.aggregation.Aggregation;
 import org.springframework.data.mongodb.core.aggregation.AggregationExpression;
@@ -87,6 +89,28 @@ public class Day27Application implements CommandLineRunner {
 		// ObjectId objKey = new Object("xxxxxxxxx");
 
 		// See PersonService.java for refactorization -------
+		// ------------------------------------------------------------------------------------
+		// Day 27 - Slide 3
+		/*
+			db.persons.update(
+				{ _id: ObjectId("662e503ac76d866aae994b8e")},
+				{ $set: {name: "Felicia Wong", age: 21, gender: "F", hobbies: ["Coding", "Hiking"]}},
+				{ upsert: true}
+			)
+		*/
+		// ObjectId id = new ObjectId("662e503ac76d866aae994b8e");
+        // Query query = new Query(Criteria.where("_id").is(id));
+
+        // Update update = new Update();
+        // update.set("name", "Felicia Wong JY");
+        // update.set("age", 21);
+        // update.set("gender", "F");
+        // update.set("hobbies", Arrays.asList("Coding", "Hiking"));
+
+        // FindAndModifyOptions options = new FindAndModifyOptions().upsert(true);
+
+        // Person person = mongoTemplate.findAndModify(query, update, options, Person.class);
+		// System.out.printf("Slide 3: %s\n", person);
 
 		// ------------------------------------------------------------------------------------
 		// Day 27 - Slide 12
@@ -98,24 +122,24 @@ public class Day27Application implements CommandLineRunner {
 			)
 		*/
 
-		// Query query = new Query(Criteria.where("name").is("Nicole Ng"));
+		// Query querySlide12 = new Query(Criteria.where("name").is("Nicole Ng Junior"));
 
 		// Person updatedPerson = new Person();
-		// updatedPerson.setName("Nicole Ng Junior");
+		// updatedPerson.setName("Nicole Ng");
 		// updatedPerson.setAge(28);
 		// updatedPerson.setGender("F");
 		// updatedPerson.setHobbies(Arrays.asList("Knitting", "Skating"));
 
-        	// Update updateOps = new Update()
-		// 		.set("name", updatedPerson.getName())
-	        //     		.set("age", updatedPerson.getAge())
-		// 		.push("hobbies")
-		// 		.each(updatedPerson.getHobbies());
+		// Update updateOps = new Update()
+		// 	.set("name", updatedPerson.getName())
+		// 	.set("age", updatedPerson.getAge())
+		// 	.push("hobbies")
+		// 	.each(updatedPerson.getHobbies());
 		
-		// UpdateResult updateResult = mongoTemplate.upsert(query, updateOps, "persons");
+		// UpdateResult updateResult = mongoTemplate.upsert(querySlide12, updateOps, "persons");
 
 		// System.out.println("Slide 13 results: " + updateResult.getModifiedCount());
-		// System.out.println("Slide 13 results: " + result);
+		// System.out.println("Slide 13 results: " + updateResult);
 
 		// ------------------------------------------------------------------------------------
 		// Day 27 - Slide 16
@@ -125,12 +149,12 @@ public class Day27Application implements CommandLineRunner {
 				{ _id: 1, name: 1, age: 1, gender: 1}
 			);
 		 */
-		Query query = new Query();
-		query.addCriteria(Criteria.where("age").gte(30));
-		query.fields()
+		Query querySlide16 = new Query();
+		querySlide16.addCriteria(Criteria.where("age").gte(30));
+		querySlide16.fields()
 		     .include("_id", "name", "age", "gender");
 
-		List<Person> resultsSlide16 = mongoTemplate.find(query, Person.class);
+		List<Person> resultsSlide16 = mongoTemplate.find(querySlide16, Person.class);
 		// System.out.printf("Slide 16: %s\n", resultsSlide16.toString());
 
 		// ------------------------------------------------------------------------------------
@@ -232,7 +256,7 @@ public class Day27Application implements CommandLineRunner {
 		// Method 2 ----
 		Criteria criteria = new Criteria()
 			.andOperator(Criteria.where("instock.warehouse").is("Ang Mo Kio"),
-				     Criteria.where("instock.qty").gt(50));
+				         Criteria.where("instock.qty").gt(50));
 	
 		Query querySlide28_I = new Query(criteria);
 		List<Document> resultSlide27_I = mongoTemplate.find(querySlide28_I, Document.class, "inventory");
@@ -827,6 +851,7 @@ public class Day27Application implements CommandLineRunner {
 				// { $out: "reviews" }
 			])
 		 */
+		MatchOperation matchOperation1 = Aggregation.match(Criteria.where("reviews.reviewer_name").is("Ray"));
 		ProjectionOperation projectOperation1 = Aggregation.project().andExclude("_id").andInclude("reviews");
 		UnwindOperation unwindOperation1 = Aggregation.unwind("reviews");
 		ProjectionOperation projectOperation2 = Aggregation.project()
@@ -840,6 +865,7 @@ public class Day27Application implements CommandLineRunner {
 			.andExpression("replaceAll(comments, '\r', '')").as("comments");
 
 		Aggregation pipelineTask3 = Aggregation.newAggregation(
+			matchOperation1,
 			projectOperation1, 
 			unwindOperation1, 
 			projectOperation2, 

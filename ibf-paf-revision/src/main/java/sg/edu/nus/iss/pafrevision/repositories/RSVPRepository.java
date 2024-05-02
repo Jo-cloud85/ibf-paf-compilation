@@ -70,7 +70,7 @@ public class RSVPRepository {
         return null;
     }
 
-    // public Integer insertRSVP(RSVP rsvp) {
+    // public RSVP insertRSVP(RSVP rsvp) {
     //     DateTime confirmationDate = rsvp.getConfirmationDate();
     //     java.util.Date utilDate = confirmationDate.toDate();
     //     java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
@@ -88,9 +88,16 @@ public class RSVPRepository {
     //     int lastId = jdbcTemplate.queryForObject(SQL_GET_LAST_ID, Integer.class);
     //     rsvp.setId(lastId);
 
-    //     mongoTemplate.save(rsvp, "rsvpV2");
+    //     //mongoTemplate.save(rsvp, "rsvpV2");
     
-    //     return lastId;
+    //     return rsvp;
+    // }
+
+    // public RSVP insertRSVPtoMongo(RSVP rsvp) {
+    //     // Integer id = insertRSVP(rsvp);
+    //     // rsvp.setId(id);
+    //     System.out.println(rsvp);
+    //     return mongoTemplate.save(rsvp, "rsvpV2");
     // }
     
 

@@ -62,6 +62,18 @@ public class RSVPController {
                         .body(resp.toString());
     }
 
+    /*
+    Example of json
+    {
+        "name" : "ben",
+        "email" : "ben@gmail.com",
+        "phone" : "90133333",
+        "confirmationDate": "2024-03-04",
+        "comment" : "",
+        "foodType" : "western"
+    }
+     */
+
     // @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     // public ResponseEntity<String> saveRSVP(@RequestBody String jsonPayload){
     
@@ -73,9 +85,11 @@ public class RSVPController {
     //                     .body("{'error_message': 'Invalid JSON'}");
     //     }
 
-    //     Integer id = rsvpService.insertRSVP(rsvp);
+    //     RSVP rsvpWithId = rsvpService.insertRSVP(rsvp);
+    //     System.out.println("HELLLLLO" + rsvpWithId);
+    //     RSVP rsvp1 = rsvpService.insertRSVPtoMongo(rsvpWithId);
     //     JsonObject resp = Json.createObjectBuilder()
-    //         .add("id", id)
+    //         .add("id", rsvpWithId.getId())
     //         .build();
     //     return ResponseEntity
     //         .status(HttpStatus.CREATED)

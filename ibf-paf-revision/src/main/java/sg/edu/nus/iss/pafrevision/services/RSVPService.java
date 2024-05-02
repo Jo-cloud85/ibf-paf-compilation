@@ -22,8 +22,12 @@ public class RSVPService {
         return rsvpRepository.searchRSVPbyEmail(email);
     }
 
-    // public Integer insertRSVP(RSVP rsvp) {
+    // public RSVP insertRSVP(RSVP rsvp) {
     //     return rsvpRepository.insertRSVP(rsvp);
+    // }
+
+    // public RSVP insertRSVPtoMongo(RSVP rsvp) {
+    //     return rsvpRepository.insertRSVPtoMongo(rsvp);
     // }
 
     public RSVP insertRSVP(RSVP rsvp){
