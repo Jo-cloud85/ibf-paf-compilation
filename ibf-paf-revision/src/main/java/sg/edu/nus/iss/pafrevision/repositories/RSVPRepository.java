@@ -101,6 +101,7 @@ public class RSVPRepository {
     // }
     
 
+    @SuppressWarnings("null")
     public RSVP insertRSVP(RSVP rsvp){
         KeyHolder keyholder = new GeneratedKeyHolder();
         try{

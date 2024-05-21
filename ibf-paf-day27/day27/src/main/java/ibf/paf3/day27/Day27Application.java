@@ -127,9 +127,9 @@ public class Day27Application implements CommandLineRunner {
 				{ _id: 1, name: 1, age: 1, gender: 1}
 			);
 		 */
-		Query query = new Query();
-		query.addCriteria(Criteria.where("age").gte(30));
-		query.fields()
+		Query querySlide16 = new Query();
+		querySlide16.addCriteria(Criteria.where("age").gte(30));
+		querySlide16.fields()
 		     .include("_id", "name", "age", "gender");
 
 		List<Person> resultsSlide16 = mongoTemplate.find(querySlide16, Person.class);
