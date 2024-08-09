@@ -3,8 +3,8 @@ package sg.edu.nus.iss.pafrevision.repositories;
 public interface RSVPQueries extends Queries{
     public static final String SQL_SELECT_ALL_RSVP = """
         SELECT id, full_name, email, phone, 
-        DATE_FORMAT(confirmation_date, \"%d/%m/%Y\") as confirmation_date,
-         comment, food_type FROM rsvp      
+        DATE_FORMAT(confirmation_date, \"%d/%m/%Y\") as confirmation_date, 
+        comment, food_type FROM rsvp      
     """;
 
     public static final String SQL_SELECT_RSVP_BY_NAME ="""

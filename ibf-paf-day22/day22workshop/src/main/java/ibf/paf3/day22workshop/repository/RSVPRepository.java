@@ -24,7 +24,7 @@ public class RSVPRepository implements RSVPQueries {
     }
 
     public List<RSVP> findAll(){
-        List<RSVP> result =new LinkedList<RSVP>();
+        List<RSVP> result = new LinkedList<RSVP>();
         result = template.query(ALL_RSVP, 
                 BeanPropertyRowMapper.newInstance(RSVP.class));
         return result;
