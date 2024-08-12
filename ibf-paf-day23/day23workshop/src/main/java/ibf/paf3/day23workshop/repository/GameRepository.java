@@ -18,14 +18,14 @@ public class GameRepository implements Queries {
     private JdbcTemplate template;
 
     public List<Game> findGamebyName (String gameName){
-        List<Game> result =new LinkedList<Game>();
+        List<Game> result =new LinkedList<>();
 
         final SqlRowSet rs = template.queryForRowSet(QUERY_1, "%" + gameName + "%");
         while(rs.next()){
             Game r = new Game();
             r.setGameName(rs.getString("boardgame_name"));
             r.setGameReviewCount(rs.getInt("number_of_reviews"));
-            String formattedNumber = String.format("%.2f", rs.getDouble("average_rating"));
+            String formattedNumber = "%.2f".formatted(rs.getDouble("average_rating"));
             r.setGameAvgRating(Double.parseDouble(formattedNumber));
             result.add(r);
         }

@@ -21,7 +21,7 @@ public class CustomerRepository implements Queries {
 
 
     public List<Customer> getAllCustomers() {
-        List<Customer> result = new LinkedList<Customer>();
+        List<Customer> result = new LinkedList<>();
         final SqlRowSet rs = jdbcTemplate.queryForRowSet(GET_ALL_CUSTOMERS);
         while(rs.next()) {
             Customer customer = new Customer();
@@ -35,7 +35,7 @@ public class CustomerRepository implements Queries {
 
 
     public List<Customer> getAllCustomersWithPagination(int limit, int offset) {
-        List<Customer> result = new LinkedList<Customer>();
+        List<Customer> result = new LinkedList<>();
         final SqlRowSet rs = jdbcTemplate.queryForRowSet(GET_ALL_CUSTOMERS_WITH_PAGINATION, limit, offset);
         while(rs.next()) {
             Customer customer = new Customer();
@@ -74,8 +74,8 @@ public class CustomerRepository implements Queries {
     }
 
 
-    public List<Orders> getCustomerByOrders(int id){
-        List<Orders> result = new LinkedList<Orders>();
+    public List<Orders> getCustomerByOrders(int id) {
+        List<Orders> result = new LinkedList<>();
         final SqlRowSet rs = jdbcTemplate.queryForRowSet(GET_CUSTOMER_BY_ORDER, id);
         while(rs.next()){
             Orders o = new Orders();
